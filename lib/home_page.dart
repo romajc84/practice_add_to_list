@@ -90,6 +90,7 @@ class HomePage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Dismissible(
                   key: UniqueKey(),
+                  direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
                     sc.stocks.removeAt(index);
                   },
