@@ -107,6 +107,7 @@ class HomePage extends StatelessWidget {
                     leading: Text(
                       sc.stocks[index].symbol,
                     ),
+                    trailing: Text(''),
                   ),
                 );
               },
