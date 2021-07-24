@@ -9,8 +9,6 @@ class HomePage extends StatelessWidget {
     final StockController sC = Get.put(StockController());
     final StockQuoteController sQC = Get.put(StockQuoteController());
 
-    String ticker;
-
     TextEditingController tEC = TextEditingController();
     return Scaffold(
       appBar: AppBar(
