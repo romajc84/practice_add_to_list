@@ -1,35 +1,62 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:http/http.dart' as http;
-import 'package:practice_add_to_list/api.dart';
+import 'dart:convert';
 
-class RemoteServices {
-  static var client = http.Client();
-}
+import 'package:practice_add_to_list/stock_quote_model.dart';
 
-Future<Stock2> getQuotes() async {
-  final response = await http.get(
-    Uri.parse('${endpoint}markets/quotes?symbols=SQ,TSLA&greeks=false'),
-    headers: {
-      'Authorization': 'Bearer $accessToken',
-    },
-  );
-  final responseJson = jsonDecode(response.body);
+class StockQuoteServices {
+  static Future<StockQuote?> getStockQuote(String ticker) async {
+    String url =
+        'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=$ticker&apikey=XQQW1OPQ70ZODVES';
 
-  return Stock2.fromJson(responseJson);
-}
-
-class Stock2 {
-  final double last;
-  final double changePercentage;
-
-  Stock2({required this.last, required this.changePercentage});
-
-  factory Stock2.fromJson(Map<String, dynamic> json) {
-    return Stock2(
-      last: json['last'],
-      changePercentage: json['change_percentage'],
-    );
+    http.Response response;
+    response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      StockQuote stockQuote = StockQuote.fromJson(json.decode(response.body));
+      return stockQuote;
+    } else {
+      return null;
+    }
   }
 }
+
+// class RemoteServices {
+//   static var client = http.Client();
+
+//   static Future<StockQuotes?> fetchStockQuotes() async {
+//     var response = await client.get(Uri.parse(
+//         'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=sq&apikey=XQQW1OPQ70ZODVES'));
+//     if (response.statusCode == 200) {
+//       return stockQuotesFromJson(jsonString);
+//     } else {
+//       return null;
+//     }
+//   }
+// }
+
+// Future<StockQuote> getQuotes() async {
+//   final response = await http.get(
+//     Uri.parse(
+//         '${endpoint}markets/quotes?symbols=$stocksWatchlist&greeks=false'),
+//     headers: {
+//       'Authorization': 'Bearer $accessToken',
+//     },
+//   );
+//   final responseJson = jsonDecode(response.body);
+
+//   return StockQuote.fromJson(responseJson);
+// }
+
+// class ApiManager {
+//   Future<List<StockQuote>> getStockQuotes() async {
+//     String url = endpoint + 'markets/quotes?symbols=' + stocksWatchlist;
+
+//     final response = await http.get(
+//       Uri.parse(url),
+//       headers: {
+//         'Authorization': 'Bearer $accessToken',
+//       },
+//     );
+//     List jsonResponse = json.decode(response.body);
+//     return jsonResponse.map((item) => StockQuote.fromJson(item)).toList();
+//   }
+// }

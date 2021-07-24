@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:practice_add_to_list/services.dart';
 import 'package:practice_add_to_list/stock_model.dart';
+import 'package:practice_add_to_list/stock_quote_model.dart';
 
 class StockController extends GetxController {
   var stocks = [].obs;
@@ -19,5 +21,29 @@ class StockController extends GetxController {
       GetStorage().write('stocks', stocks.toList());
     });
     super.onInit();
+  }
+}
+
+class StockQuoteController extends GetxController {
+  var isLoading = true.obs;
+  var stockQuote = StockQuote().obs;
+  String ticker = 'sq';
+
+  @override
+  void onInit() {
+    getStockQuote();
+    super.onInit();
+  }
+
+  void getStockQuote() async {
+    try {
+      isLoading(true);
+      var quotes = await StockQuoteServices.getStockQuote(ticker);
+      if (quotes != null) {
+        stockQuote.value = quotes;
+      }
+    } finally {
+      isLoading(false);
+    }
   }
 }
