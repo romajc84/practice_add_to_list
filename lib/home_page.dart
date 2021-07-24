@@ -113,7 +113,8 @@ class HomePage extends StatelessWidget {
                       if (sQC.isLoading.value) {
                         return Text('loading');
                       } else {
-                        return Text(sQC.stockQuote.globalQuote.price);
+                        return Text(
+                            sQC.stockQuote.value.globalQuote!.price as String);
                       } // stuck here!
                     }),
                   ),

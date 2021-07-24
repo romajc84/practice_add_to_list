@@ -38,9 +38,9 @@ class StockQuoteController extends GetxController {
   void getStockQuote() async {
     try {
       isLoading(true);
-      var quotes = await StockQuoteServices.getStockQuote(ticker);
-      if (quotes != null) {
-        stockQuote.value = quotes;
+      var data = await StockQuoteServices.getStockQuote(ticker);
+      if (data != null) {
+        stockQuote.value = data;
       }
     } finally {
       isLoading(false);
