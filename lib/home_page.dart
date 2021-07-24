@@ -10,6 +10,9 @@ class HomePage extends StatelessWidget {
     final StockQuoteController sQC = Get.put(StockQuoteController());
 
     TextEditingController tEC = TextEditingController();
+
+    // final sQCT = sQC.getStockQuote(tEC.text);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Add to List Practice'),
@@ -43,6 +46,7 @@ class HomePage extends StatelessWidget {
                       ),
                       onSubmitted: (text) {
                         sC.stocks.add(Stock(symbol: tEC.text));
+                        sQC.getStockQuote(text);
                         tEC.clear();
                         Get.back();
                       },

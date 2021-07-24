@@ -1,21 +1,3 @@
-// class StockQuote {
-//   final double? last;
-//   final double? changePercentage;
-
-//   StockQuote({this.last, this.changePercentage});
-
-//   factory StockQuote.fromJson(Map<String, dynamic> json) {
-//     return StockQuote(
-//       last: json['last'],
-//       changePercentage: json['change_percentage'],
-//     );
-//   }
-// }
-
-// To parse this JSON data, do
-//
-//     final stocksQuote = stocksQuoteFromJson(jsonString);
-
 class StockQuote {
   GlobalQuote? globalQuote;
 
