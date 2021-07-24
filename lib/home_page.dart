@@ -6,10 +6,12 @@ import 'package:practice_add_to_list/stock_model.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final StockController sc = Get.put(StockController());
+    final StockController sC = Get.put(StockController());
+    final StockQuoteController sQC = Get.put(StockQuoteController());
+
+    String ticker;
 
     TextEditingController tEC = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Add to List Practice'),
@@ -42,7 +44,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       onSubmitted: (text) {
-                        sc.stocks.add(Stock(symbol: tEC.text));
+                        sC.stocks.add(Stock(symbol: tEC.text));
                         tEC.clear();
                         Get.back();
                       },
@@ -51,7 +53,7 @@ class HomePage extends StatelessWidget {
                   // SizedBox(height: 15),
                   ElevatedButton(
                     onPressed: () {
-                      sc.stocks.add(Stock(symbol: tEC.text));
+                      sC.stocks.add(Stock(symbol: tEC.text));
                       tEC.clear();
                       Get.back();
                     },
@@ -79,7 +81,7 @@ class HomePage extends StatelessWidget {
           padding: EdgeInsets.all(5),
           child: Obx(
             () => ListView.separated(
-              itemCount: sc.stocks.length,
+              itemCount: sC.stocks.length,
               separatorBuilder: (context, index) {
                 return Divider(
                   color: Colors.black,
@@ -92,7 +94,7 @@ class HomePage extends StatelessWidget {
                   key: UniqueKey(),
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
-                    sc.stocks.removeAt(index);
+                    sC.stocks.removeAt(index);
                   },
                   background: Container(
                     alignment: Alignment.centerRight,
@@ -105,9 +107,15 @@ class HomePage extends StatelessWidget {
                   ),
                   child: ListTile(
                     leading: Text(
-                      sc.stocks[index].symbol,
+                      sC.stocks[index].symbol,
                     ),
-                    trailing: Text(''),
+                    trailing: Obx(() {
+                      if (sQC.isLoading.value) {
+                        return Text('loading');
+                      } else {
+                        return Text(sQC.stockQuote.globalQuote.price);
+                      } // stuck here!
+                    }),
                   ),
                 );
               },
