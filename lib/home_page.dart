@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
                       ),
                       onSubmitted: (text) {
                         sC.stocks.add(Stock(symbol: tEC.text));
-                        sQC.getStockQuote(text);
+                        sQC.getStockQuote();
                         tEC.clear();
                         Get.back();
                       },

@@ -27,18 +27,17 @@ class StockController extends GetxController {
 class StockQuoteController extends GetxController {
   var isLoading = true.obs;
   var stockQuote = StockQuote().obs;
-  var newText;
 
   @override
   void onInit() {
-    getStockQuote(newText);
+    getStockQuote();
     super.onInit();
   }
 
-  void getStockQuote(newText) async {
+  void getStockQuote() async {
     try {
       isLoading(true);
-      var data = await StockQuoteServices.getStockQuote(newText);
+      var data = await StockQuoteServices.getStockQuote();
       if (data != null) {
         stockQuote.value = data;
       }
